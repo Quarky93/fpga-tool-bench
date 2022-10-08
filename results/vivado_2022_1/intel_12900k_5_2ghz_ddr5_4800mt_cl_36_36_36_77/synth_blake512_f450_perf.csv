@@ -1,0 +1,19 @@
+# started on Sun Oct  9 01:04:26 2022
+
+349723.15,msec,task-clock,349723149333,100.00,1.939,CPUs utilized
+1817934608079,,cpu_core/cycles/,349733347266,100.00,5.198,G/sec
+<not counted>,,cpu_atom/cycles/,0,0.00,,
+3613598917070,,cpu_core/instructions/,349733347266,100.00,10.333,G/sec
+<not counted>,,cpu_atom/instructions/,0,0.00,,
+9581,,context-switches,349723149333,100.00,27.396,/sec
+195,,cpu-migrations,349723149333,100.00,0.558,/sec
+13478078,,page-faults,349723149333,100.00,38.539,K/sec
+762640220166,,cpu_core/branches/,349733347266,100.00,2.181,G/sec
+<not counted>,,cpu_atom/branches/,0,0.00,,
+3996310665,,cpu_core/branch-misses/,349733347266,100.00,11.427,M/sec
+<not counted>,,cpu_atom/branch-misses/,0,0.00,,
+22981583335,,cpu_core/cache-references/,349733347266,100.00,65.714,M/sec
+<not counted>,,cpu_atom/cache-references/,0,0.00,,
+7509344665,,cpu_core/cache-misses/,349733347266,100.00,21.472,M/sec
+<not counted>,,cpu_atom/cache-misses/,0,0.00,,
+180384700631,ns,duration_time,180384700631,100.00,515.793,M/sec

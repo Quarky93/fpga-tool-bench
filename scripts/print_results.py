@@ -32,14 +32,14 @@ def get_cache_misses_percent(perf_data):
 
 def get_cache_references(perf_data):
     if ('cache-references' in perf_data):
-        return float(perf_data['cache-references/']['counter_value'])
+        return float(perf_data['cache-references']['counter_value'])
     elif ('cpu_core/cache-references/' in perf_data):
         return float(perf_data['cpu_core/cache-references/']['counter_value'])
     return None
 
 def get_cache_misses(perf_data):
     if ('cache-misses' in perf_data):
-        return float(perf_data['cache-misses/']['counter_value'])
+        return float(perf_data['cache-misses']['counter_value'])
     elif ('cpu_core/cache-misses/' in perf_data):
         return float(perf_data['cpu_core/cache-misses/']['counter_value'])
     return None

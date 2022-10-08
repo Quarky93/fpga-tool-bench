@@ -113,7 +113,7 @@ static ap_uint<512> keccak1600(state_t state) {
     return to_hash(tmp);
 }
 
-void keccak512_top(stream<ap_uint<512>> in, stream<ap_uint<512>> *out) {
+void keccak512_top(ap_uint<512> in, ap_uint<512> *out) {
 #pragma HLS INTERFACE mode=ap_ctrl_none port=return
 #pragma HLS INTERFACE mode=ap_none port=in
 #pragma HLS INTERFACE mode=ap_none port=out
