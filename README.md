@@ -1,16 +1,54 @@
 # FpgaToolBench
 Drag racing computers with FPGA design tools.
 
-## Xilinx Vitis + Vivado Benchmarks
-Ran with `-in_memory` flag.
+## Prerequisites
+Install perf tools:
+```bash
+sudo apt install linux-tools-`uname -r`
+```
 
-| CPU                         | RAM                             | Disk                | OS                               | Blake {HLS + Synth + PnR} (minutes) |
-|-----------------------------|---------------------------------|---------------------|----------------------------------|-------------------------------------|
-| Intel i9-12900K - 5.2GHz OC | 128GB-DDR5-4800MT-CL36-36-36-77 | Samsung 980 Pro 2TB | Windows + WSL (Ubuntu 20.04 LTS) | 10:17                               |
-| Intel i9-12900K - 5.0GHz    | 128GB-DDR5-4800MT-CL36-36-36-77 | Samsung 980 Pro 2TB | Windows + WSL (Ubuntu 20.04 LTS) | 10:39                               |
-| Intel i9-12900K - 5.0GHz    | 128GB-DDR4-3600MT-CL18-22-22-42 | Samsung 980 Pro 2TB | Windows + WSL (Ubuntu 20.04 LTS) | 10:46                               |
+Set perf permissions (do this at your own risk):
+```bash
+sudo sh -c 'echo -1 >/proc/sys/kernel/perf_event_paranoid'
+```
 
-Extra observations:
-- WSL2 vs bare metal Linux made no noticable difference (within margin of error).
-- Vivado installed into ramdisk made no difference.
-- Working directory on ramdisk made no difference.
+Install python dependencies:
+```bash
+pip3 install py-markdown-table
+```
+
+Install Vivado and Vitis HLS.
+Make sure vivado and vitis_hls are in the path:
+```bash
+source /tools/Xilinx/Vivado/2022.1/settings64.sh
+```
+
+## Running the benchmarks
+Run the benchmarks:
+```bash
+make benchmarks
+```
+
+Note: do not run the make command in parallel mode.
+Note: for hybrid CPUs such as Intel Alderlake, pin the process to the p-cores for correct performance counter metrics:
+```bash
+# For 8 p-cores (first 16 threads)
+taskset -c 0-15 make benchmarks
+```
+
+## Commit results
+Create the directory:
+```bash
+mkdir -p results/vivado_{MAJOR}_{MINOR}/{CPU_VENDOR}_{CPU_PART}_{CPU_MAX_FREQ}_{DDR_VERSION}_{DDR_SPEED}_{DDR_CAS_LATENCY}
+# For example:
+mkdir -p results/vivado_2022_1/intel_12900k_5_2ghz_ddr5_4800mt_cl_36_36_36_77
+```
+
+Copy the output files to the above directory:
+```bash
+build/README.md
+build/*.json
+build/*.csv
+```
+
+Attach a link to your geekbench5 score in the README.md within your results directory.
