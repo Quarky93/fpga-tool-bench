@@ -24,11 +24,12 @@ def get_cpu_load(perf_data):
     return get_cpu_time(perf_data) / get_run_time(perf_data)
 
 def get_cache_misses_percent(perf_data):
-    references = get_cache_references(perf_data)
-    misses = get_cache_misses(perf_data)
-    if (references and misses):
+    try:
+        references = get_cache_references(perf_data)
+        misses = get_cache_misses(perf_data)
         return misses / references
-    return None
+    except:
+        return None
 
 def get_cache_references(perf_data):
     if ('cache-references' in perf_data):
@@ -59,11 +60,12 @@ def get_cycles(perf_data):
     return None
 
 def get_ipc(perf_data):
-    instructions = get_instructions(perf_data)
-    cycles = get_cycles(perf_data)
-    if (instructions and cycles):
+    try:
+        instructions = get_instructions(perf_data)
+        cycles = get_cycles(perf_data)
         return instructions / cycles
-    return None
+    except:
+        return None
 
 def print_metric(metric, value, unit, scale=1, decimals=2):
     if value is not None:
@@ -73,13 +75,6 @@ def format_metric(value, scale=1, decimals=2):
     if value is not None:
         return str(round(value * scale, decimals))
     return None
-
-def print_perf_data(perf_data):
-    print_metric('Run Time', get_run_time(perf_data), unit='s')
-    print_metric('CPU Time', get_cpu_time(perf_data), unit='s')
-    print_metric('CPU Load', get_cpu_load(perf_data), scale=100, unit='%')
-    print_metric('LLC Cache Misses', get_cache_misses_percent(perf_data), scale=100, unit='%')
-    print_metric('IPC', get_ipc(perf_data), unit='instrs/clock')
 
 def make_table_row(stage, perf_data):
     row = {}
@@ -97,15 +92,21 @@ def make_table_row_total(data_0, data_1, data_2):
     run_time = get_run_time(data_0) + get_run_time(data_1) + get_run_time(data_2)
     cpu_time = get_cpu_time(data_0) + get_cpu_time(data_1) + get_cpu_time(data_2)
     cpu_load = cpu_time / run_time
-    cache_references = get_cache_references(data_0) + get_cache_references(data_1) + get_cache_references(data_2)
-    cache_misses = get_cache_misses(data_0) + get_cache_misses(data_1) + get_cache_misses(data_2)
-    instructions = get_instructions(data_0) + get_instructions(data_1) + get_instructions(data_2)
-    cycles = get_cycles(data_0) + get_cycles(data_1) + get_cycles(data_2)
+    try:
+        cache_references = get_cache_references(data_0) + get_cache_references(data_1) + get_cache_references(data_2)
+        cache_misses = get_cache_misses(data_0) + get_cache_misses(data_1) + get_cache_misses(data_2)
+        row['LLC Cache Misses (%)'] = format_metric(cache_misses / cache_references, scale=100)
+    except:
+        row['LLC Cache Misses (%)'] = None
+    try:
+        instructions = get_instructions(data_0) + get_instructions(data_1) + get_instructions(data_2)
+        cycles = get_cycles(data_0) + get_cycles(data_1) + get_cycles(data_2)
+        row['IPC (instrs/clock)'] = format_metric(instructions / cycles)
+    except:
+        row['IPC (instrs/clock)'] = None
     row['Run Time (s)'] = format_metric(run_time)
     row['CPU Time (s)'] = format_metric(cpu_time)
     row['CPU Load (%)'] = format_metric(cpu_load, scale=100)
-    row['LLC Cache Misses (%)'] = format_metric(cache_misses / cache_references, scale=100)
-    row['IPC (instrs/clock)'] = format_metric(instructions / cycles)
     return row
 
 def main():
@@ -119,6 +120,8 @@ def main():
         make_table_row('impl', impl_data),
         make_table_row_total(csynth_data, synth_data, impl_data)
     ]
+    table = list(filter(lambda item: item is not None, table))
+    print(table)
     print('## ' + benchmark)
     if not os.path.exists('README.md'):
         with open('README.md', 'w') as f:
