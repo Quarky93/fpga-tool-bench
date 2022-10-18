@@ -1,0 +1,34 @@
+[
+    {
+        "Stage": "csynth",
+        "Run Time (s)": "35.89",
+        "CPU Time (s)": "37.4",
+        "CPU Load (%)": "104.21",
+        "LLC Cache Misses (%)": "22.18",
+        "IPC (instrs/clock)": "2.66"
+    },
+    {
+        "Stage": "synth",
+        "Run Time (s)": "379.88",
+        "CPU Time (s)": "639.06",
+        "CPU Load (%)": "168.22",
+        "LLC Cache Misses (%)": "13.32",
+        "IPC (instrs/clock)": "1.76"
+    },
+    {
+        "Stage": "impl",
+        "Run Time (s)": "1332.91",
+        "CPU Time (s)": "2780.02",
+        "CPU Load (%)": "208.57",
+        "LLC Cache Misses (%)": "23.29",
+        "IPC (instrs/clock)": "1.46"
+    },
+    {
+        "Stage": "total",
+        "Run Time (s)": "1748.69",
+        "CPU Time (s)": "3456.48",
+        "CPU Load (%)": "197.66",
+        "LLC Cache Misses (%)": "21.04",
+        "IPC (instrs/clock)": "1.53"
+    }
+]

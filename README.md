@@ -18,6 +18,10 @@ pip3 install py-markdown-table
 ```
 
 Install Vivado and Vitis HLS.
+You must select both of the following options during installation:
+- "Install devices for Alveo and Xilinx edge acceleration platforms"
+- "Virtex UltraScale+ HBM"
+
 Make sure vivado and vitis_hls are in the path:
 ```bash
 source /tools/Xilinx/Vivado/2022.1/settings64.sh
@@ -41,7 +45,7 @@ Create the directory:
 ```bash
 mkdir -p results/vivado_{MAJOR}_{MINOR}/{CPU_VENDOR}_{CPU_PART}_{CPU_MAX_FREQ}_{DDR_VERSION}_{DDR_SPEED}_{DDR_CAS_LATENCY}
 # For example:
-mkdir -p results/vivado_2022_1/intel_12900k_5_2ghz_ddr5_4800mt_cl_36_36_36_77
+mkdir -p results/vivado_2022_1/intel_12900k_5_2ghz_ddr5_4800mt_cl36
 ```
 
 Copy the output files to the above directory:

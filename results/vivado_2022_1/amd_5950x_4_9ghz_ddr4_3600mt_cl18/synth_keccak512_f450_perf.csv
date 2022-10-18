@@ -1,0 +1,16 @@
+# started on Sun Oct  9 08:45:28 2022
+
+596793.92,msec,task-clock,596793920613,100.00,2.066,CPUs utilized
+2763936890778,,cycles,372924635134,62.51,4.631,GHz
+4897941310011,,instructions,372865514268,62.50,1.77,insn per cycle
+,,,,,0.00,stalled cycles per insn
+61527,,context-switches,596793920613,100.00,103.096,/sec
+5593,,cpu-migrations,596793920613,100.00,9.372,/sec
+13941730,,page-faults,596793920613,100.00,23.361,K/sec
+6354777947,,stalled-cycles-frontend,372805602341,62.49,0.23,frontend cycles idle
+20121916488,,stalled-cycles-backend,372860643478,62.51,0.73,backend cycles idle
+1140076136879,,branches,372964676157,62.53,1.910,G/sec
+5506361117,,branch-misses,373002510546,62.53,0.48,of all branches
+128871366304,,cache-references,372932659370,62.52,215.939,M/sec
+30234841525,,cache-misses,372939977816,62.52,23.461,of all cache refs
+288805697393,ns,duration_time,288805697393,100.00,483.929,M/sec
