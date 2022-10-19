@@ -2,12 +2,12 @@
 Drag racing computers with FPGA design tools.
 
 ## Vivado 2022.1
-The score is the total runtime (lower is better).
-| CPU                      | RAM                | OS           | Score (Runtime) |
-|--------------------------|--------------------|--------------|-----------------|
-| Intel i9-12900K (5.2GHz) | DDR5 4800MT/s CL36 | Ubuntu 20.04 | 9,833           |
-| AMD R9-5950X (4.9GHz)    | DDR4 3600MT/s CL18 | Ubuntu 20.04 | 13,779          |
-| AMD EYPC 7313P (3.7GHz)  | DDR4 3200MT/s CL22 | Ubuntu 20.04 | 16,501          |
+Lower runtime is better!
+| CPU                      | RAM                | OS           | Runtime (seconds) |
+|--------------------------|--------------------|--------------|-------------------|
+| Intel i9-12900K (5.2GHz) | DDR5 4800MT/s CL36 | Ubuntu 20.04 | 9,833             |
+| AMD R9-5950X (4.9GHz)    | DDR4 3600MT/s CL18 | Ubuntu 20.04 | 13,779            |
+| AMD EYPC 7313P (3.7GHz)  | DDR4 3200MT/s CL22 | Ubuntu 20.04 | 16,501            |
 
 # Instructions
 ## Prerequisites
