@@ -11,6 +11,8 @@ Lower runtime is better!
 
 # Instructions
 ## Prerequisites
+Please use a OS supported by the Vivado version you are using. E.g. Ubuntu 20.04 for Vivado 2022.1.
+
 Install perf tools:
 ```bash
 sudo apt install linux-tools-`uname -r`
