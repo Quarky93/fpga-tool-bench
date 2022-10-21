@@ -44,6 +44,7 @@ const state_t iv = {
 };
 
 static ap_uint<768> pad_512(ap_uint<512> msg) {
+#pragma HLS INLINE
     ap_uint<768> tmp;
     tmp(767, 256) = msg;
     tmp[255] = 1;
@@ -52,6 +53,7 @@ static ap_uint<768> pad_512(ap_uint<512> msg) {
 }
 
 static state_t add_input(state_t state, ap_uint<256> block) {
+#pragma HLS INLINE off
     for (int i = 0; i < 8; i++) {
         state[i] ^= reverse_bytes_32(block(255 - i * 32, 224 - i * 32));
     }
@@ -59,6 +61,7 @@ static state_t add_input(state_t state, ap_uint<256> block) {
 }
 
 static state_t round_even(state_t state) {
+#pragma HLS INLINE off
     xg = (x0 + xg);
     x0 = rotl(x0, 7);
     xh = (x1 + xh);
@@ -159,6 +162,7 @@ static state_t round_even(state_t state) {
 }
 
 static state_t round_odd(state_t state) {
+#pragma HLS INLINE off
     xj = (xc + xj);
     xc = rotl(xc, 7);
     xi = (xd + xi);
@@ -259,6 +263,7 @@ static state_t round_odd(state_t state) {
 }
 
 static state_t transform(state_t state) {
+#pragma HLS INLINE off
     state = round_even(state);
     state = round_odd(state);
     state = round_even(state);
@@ -279,6 +284,7 @@ static state_t transform(state_t state) {
 }
 
 static ap_uint<512> finalize(state_t state) {
+#pragma HLS INLINE off
     xv ^= 1;
     for (int i = 0; i < 10; i++) {
         state = transform(state);

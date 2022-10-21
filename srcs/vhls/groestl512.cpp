@@ -157,7 +157,7 @@ static state_t shift_bytes_q(state_t state) {
 }
 
 static state_t inner_round_p(state_t state, int round) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     state_t ret = add_round_constant_p(state, round);
     ret = sub_bytes(ret);
     ret = shift_bytes_p(ret);
@@ -166,7 +166,7 @@ static state_t inner_round_p(state_t state, int round) {
 }
 
 static state_t inner_round_q(state_t state, int round) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     state_t ret = add_round_constant_q(state, round);
     ret = sub_bytes(ret);
     ret = shift_bytes_q(ret);
@@ -175,7 +175,7 @@ static state_t inner_round_q(state_t state, int round) {
 }
 
 static state_t compress_p(state_t state) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     state_t ret = state;
     for (int i = 0; i < 14; i++) {
         ret = inner_round_p(ret, i);
@@ -184,7 +184,7 @@ static state_t compress_p(state_t state) {
 }
 
 static state_t compress_q(state_t state) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     state_t ret = state;
     for (int i = 0; i < 14; i++) {
         ret = inner_round_q(ret, i);
@@ -193,7 +193,7 @@ static state_t compress_q(state_t state) {
 }
 
 static ap_uint<512> groestl(state_t state) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     StateMatrix<8, 16, 8> iv = StateMatrix<8, 16, 8>();
     iv[6][15] = 0x02;
 

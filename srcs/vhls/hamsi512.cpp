@@ -2089,6 +2089,7 @@ const ap_uint<512> ec7[256] = {
 };
 
 static ap_uint<640> pad_512(ap_uint<512> msg) {
+#pragma HLS INLINE
     ap_uint<640> tmp;
     tmp(639, 128) = msg;
     tmp[127] = 1;
@@ -2098,11 +2099,13 @@ static ap_uint<640> pad_512(ap_uint<512> msg) {
 }
 
 static nibble_t sbox(nibble_t x) {
+#pragma HLS INLINE off
     const nibble_t rom[16] = { 8, 6, 7, 9, 3, 12, 10, 15, 13, 1, 14, 4, 0, 11, 5, 2 };
     return rom[x];
 }
 
 static linear_out_t linear(word_t a, word_t b, word_t c, word_t d) {
+#pragma HLS INLINE off
     a = rotl(a, 13);
     c = rotl(c, 3);
     b = b ^ a ^ c;
@@ -2122,6 +2125,7 @@ static linear_out_t linear(word_t a, word_t b, word_t c, word_t d) {
 }
 
 static state_t expand(block_t block, chain_t chain) {
+#pragma HLS INLINE
 #pragma HLS BIND_STORAGE variable=ec0 type=rom_np impl=lutram
 #pragma HLS BIND_STORAGE variable=ec1 type=rom_np impl=lutram
 #pragma HLS BIND_STORAGE variable=ec2 type=rom_np impl=lutram
@@ -2170,6 +2174,7 @@ static state_t expand(block_t block, chain_t chain) {
 }
 
 static state_t add_constants(state_t state, word_t c) {
+#pragma HLS INLINE off
     const state_t a = {
         0xff00f0f0, 0xccccaaaa, 0xf0f0cccc, 0xff00aaaa,
         0xccccaaaa, 0xf0f0ff00, 0xaaaacccc, 0xf0f0ff00,
@@ -2185,6 +2190,7 @@ static state_t add_constants(state_t state, word_t c) {
 }
 
 static state_t add_constants_final(state_t state, word_t c) {
+#pragma HLS INLINE off
     const state_t a = {
         0xcaf9639c, 0x0ff0f9c0, 0x639c0ff0, 0xcaf9f9c0,
         0x0ff0f9c0, 0x639ccaf9, 0xf9c00ff0, 0x639ccaf9,
@@ -2200,7 +2206,7 @@ static state_t add_constants_final(state_t state, word_t c) {
 }
 
 static state_t subsitute(state_t state) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     state_t tmp;
     for (int i = 0; i < 32; i++) {
         nibble_t s0 = sbox((state[24][i], state[16][i], state[8][i], state[0][i]));
@@ -2248,7 +2254,7 @@ static state_t subsitute(state_t state) {
 }
 
 static state_t diffuse(state_t state) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     linear_out_t t0 = linear(state[0], state[9], state[18], state[27]);
     linear_out_t t1 = linear(state[1], state[10], state[19], state[28]);
     linear_out_t t2 = linear(state[2], state[11], state[20], state[29]);
@@ -2297,8 +2303,8 @@ static state_t diffuse(state_t state) {
     return tmp;
 }
 
-chain_t hamsi_block(block_t block, chain_t chain) {
-#pragma HLS PIPELINE II=1
+static chain_t hamsi_block(block_t block, chain_t chain) {
+#pragma HLS INLINE off
     state_t state = expand(block, chain);
     for (int i = 0; i < 6; i++) {
         state = add_constants(state, i);
@@ -2309,8 +2315,8 @@ chain_t hamsi_block(block_t block, chain_t chain) {
         state[16], state[17], state[18], state[19], state[20], state[21], state[22], state[23]);
 }
 
-chain_t hamsi_block_final(block_t block, chain_t chain) {
-#pragma HLS PIPELINE II=1
+static chain_t hamsi_block_final(block_t block, chain_t chain) {
+#pragma HLS INLINE off
     state_t state = expand(block, chain);
     for (int i = 0; i < 12; i++) {
         state = add_constants_final(state, i);

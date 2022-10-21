@@ -77,7 +77,6 @@ static ap_uint<512> to_hash(state_t state) {
 
 static state_t keccak1600_round(state_t state, int round) {
 #pragma HLS FUNCTION_INSTANTIATE variable=round
-#pragma HLS PIPELINE II=1
     word_t c[5];
     word_t d[5];
     word_t b[5][5];
@@ -105,7 +104,7 @@ static state_t keccak1600_round(state_t state, int round) {
 }
 
 static ap_uint<512> keccak1600(state_t state) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     state_t tmp = state;
     for (int i = 0; i < 24; i++) {
         tmp = keccak1600_round(tmp, i);

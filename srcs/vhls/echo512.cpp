@@ -19,6 +19,7 @@ const ap_uint<128> iv[8] = {
 
 // -- AES -------------------------------------------------------------------------------------------------------------
 static byte_t aes_mul2(byte_t x) {
+#pragma HLS INLINE off
     byte_t tmp;
     tmp[0] = x[7];
     tmp[1] = x[7] ^ x[0];
@@ -32,6 +33,7 @@ static byte_t aes_mul2(byte_t x) {
 }
 
 static byte_t aes_sbox(byte_t x) {
+#pragma HLS INLINE
     const byte_t rom[256] = {
         0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
         0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
@@ -55,6 +57,7 @@ static byte_t aes_sbox(byte_t x) {
 }
 
 static inner_state_t aes_sub_bytes(inner_state_t state) {
+#pragma HLS INLINE
     inner_state_t res;
     for (int i = 0; i < 4; i++) {
         res[i][0] = aes_sbox(state[i][0]);
@@ -66,6 +69,7 @@ static inner_state_t aes_sub_bytes(inner_state_t state) {
 }
 
 static inner_state_t aes_shift_rows(inner_state_t state) {
+#pragma HLS INLINE
     inner_state_t res;
     for (int i = 0; i < 4; i++) {
         res[i][0] = state[i][(0 + i) % 4];
@@ -77,6 +81,7 @@ static inner_state_t aes_shift_rows(inner_state_t state) {
 }
 
 static inner_state_t aes_mix_cols(inner_state_t state) {
+#pragma HLS INLINE
     byte_t innerTmp[4][4];
     byte_t outerTmp[4];
     inner_state_t res;
@@ -95,6 +100,7 @@ static inner_state_t aes_mix_cols(inner_state_t state) {
 }
 
 static inner_state_t aes_add_key(inner_state_t state, ap_uint<128> key) {
+#pragma HLS INLINE
     inner_state_t res;
     for (int i = 0; i < 4; i++) {
         res[0][i] = state[0][i] ^ key(127 - (32 * i + 0), 120 - (32 * i + 0));
@@ -106,6 +112,7 @@ static inner_state_t aes_add_key(inner_state_t state, ap_uint<128> key) {
 }
 
 static inner_state_t aesenc(inner_state_t state, ap_uint<128> key) {
+#pragma HLS INLINE off
     inner_state_t tmp;
     tmp = aes_sub_bytes(state);
     tmp = aes_shift_rows(tmp);
@@ -115,6 +122,7 @@ static inner_state_t aesenc(inner_state_t state, ap_uint<128> key) {
 }
 
 static inner_state_t zero_key_aesenc(inner_state_t state) {
+#pragma HLS INLINE off
     inner_state_t tmp;
     tmp = aes_sub_bytes(state);
     tmp = aes_shift_rows(tmp);
@@ -124,6 +132,7 @@ static inner_state_t zero_key_aesenc(inner_state_t state) {
 // --------------------------------------------------------------------------------------------------------------------
 
 static ap_uint<1024> pad_512(ap_uint<512> msg) {
+#pragma HLS INLINE
     ap_uint<1024> tmp;
     tmp(1023, 512) = msg;
     tmp[511] = 0x1;
@@ -134,6 +143,7 @@ static ap_uint<1024> pad_512(ap_uint<512> msg) {
 }
 
 static state_t to_state(ap_uint<1024> padded_msg) {
+#pragma HLS INLINE
     state_t tmp;
     tmp[0][0] = iv[0];
     tmp[1][0] = iv[1];
@@ -155,6 +165,7 @@ static state_t to_state(ap_uint<1024> padded_msg) {
 }
 
 static state_t big_sub(state_t state, int round) {
+#pragma HLS INLINE off
     state_t tmp;
     ap_uint<64> k;
     k = ap_uint<64>(512 + 16 * round);
@@ -170,11 +181,13 @@ static state_t big_sub(state_t state, int round) {
 }
 
 static state_t big_shift(state_t state) {
+#pragma HLS INLINE
     int rc[4] = {0, 1, 2, 3};
     return state.rotl_rows(rc);
 }
 
 static state_t big_mix(state_t state) {
+#pragma HLS INLINE off
     state_t tmp;
     for (int i = 0; i < 4; i++) {
         word_t a, b, c, d;
@@ -205,6 +218,7 @@ static state_t big_mix(state_t state) {
 }
 
 static state_t echo_round(state_t state, int round) {
+#pragma HLS INLINE off
     state_t tmp;
     tmp = big_sub(state, round);
     tmp = big_shift(tmp);
@@ -213,6 +227,7 @@ static state_t echo_round(state_t state, int round) {
 }
 
 static ap_uint<512> to_hash(state_t initial_state, state_t final_state) {
+#pragma HLS INLINE
     hls::vector<ap_uint<128>, 8> v;
     v[0] = iv[0] ^ initial_state[0][2] ^ final_state[0][0] ^ final_state[0][2];
     v[1] = iv[1] ^ initial_state[1][2] ^ final_state[1][0] ^ final_state[1][2];
@@ -222,6 +237,7 @@ static ap_uint<512> to_hash(state_t initial_state, state_t final_state) {
 }
 
 static ap_uint<512> echo(state_t state) {
+#pragma HLS INLINE off
     state_t tmp = state;
     for (int i = 0; i < 10; i++) {
         tmp = echo_round(tmp, i);

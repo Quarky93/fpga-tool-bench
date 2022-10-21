@@ -107,7 +107,7 @@ static word_t expand_f2(double_pipe_t m, double_pipe_t h, quad_pipe_t q, int i) 
 }
 
 static double_pipe_t compress(double_pipe_t m, double_pipe_t h) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     double_pipe_t w;
     quad_pipe_t q;
 
@@ -178,7 +178,7 @@ static double_pipe_t compress(double_pipe_t m, double_pipe_t h) {
 }
 
 static ap_uint<512> bmw(double_pipe_t m) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     double_pipe_t tmp = compress(m, iv);
     return to_hash(compress(tmp, fv));
 }

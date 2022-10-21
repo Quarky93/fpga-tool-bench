@@ -54,9 +54,7 @@ const ap_uint<256> rc[42] = {
 };
 
 static state_t sub_nibbles(state_t state, int round) {
-#pragma HLS INLINE off
 #pragma HLS FUNCTION_INSTANTIATE variable=round
-#pragma HLS PIPELINE II=1
     const nibble_t sbox[2][16] = {
         { 9, 0, 4, 11, 13, 12, 3, 15, 1, 10, 2, 6, 7, 5, 8, 14 },
         { 3, 12, 6, 13, 5, 7, 1, 9, 15, 2, 0, 4, 11, 10, 14, 8 }
@@ -70,6 +68,7 @@ static state_t sub_nibbles(state_t state, int round) {
 }
 
 static linear_t mini_linear(nibble_t a, nibble_t b) {
+#pragma HLS INLINE off
     nibble_t c, d;
     a.reverse();
     b.reverse();
@@ -101,6 +100,7 @@ static state_t linear(state_t state) {
 }
 
 static state_t permute_0(state_t state) {
+#pragma HLS INLINE off
     state_t tmp;
     for (int i = 0; i < 64; i++) {
         tmp[4 * i + 0] = state[4 * i + 0];
@@ -112,6 +112,7 @@ static state_t permute_0(state_t state) {
 }
 
 static state_t permute_1(state_t state) {
+#pragma HLS INLINE off
     state_t tmp;
     for (int i = 0; i < 128; i++) {
         tmp[i] = state[2 * i];
@@ -121,6 +122,7 @@ static state_t permute_1(state_t state) {
 }
 
 static state_t permute_2(state_t state) {
+#pragma HLS INLINE off
     state_t tmp;
     for (int i = 0; i < 128; i++) {
         tmp[i] = state[i];
@@ -142,8 +144,6 @@ static state_t permute(state_t state) {
 
 static state_t compress_round(state_t state, int round) {
 #pragma HLS FUNCTION_INSTANTIATE variable=round
-#pragma HLS INLINE off
-#pragma HLS PIPELINE II=1
     state = sub_nibbles(state, round);
     state = linear(state);
     state = permute(state);
@@ -151,7 +151,7 @@ static state_t compress_round(state_t state, int round) {
 }
 
 static ap_uint<1024> compress(ap_uint<1024> x) {
-#pragma HLS PIPELINE II=1
+#pragma HLS INLINE off
     x.reverse();
     state_t state;
     for (int i = 0; i < 128; i++) {
@@ -179,6 +179,7 @@ static ap_uint<1024> compress(ap_uint<1024> x) {
 }
 
 static ap_uint<512> compress(ap_uint<512> x) {
+#pragma HLS INLINE
     ap_uint<1024> h = ap_uint<1024>("0x6fd14b963e00aa17636a2e057a15d5438a225e8d0c97ef0be9341259f2b3c361891da0c1536f801e2aa9056bea2b6d80588eccdb2075baa6a90f3a76baf83bf70169e60541e34a6946b58a8e2e6fe65a1047a7d0c1843c243b6e71b12d5ac199cf57f6ec9db1f856a706887c5716b156e3c2fcdfe68517fb545a4678cc8cdd4b", 16);
     h(1023, 512) = h(1023, 512) ^ x;
     h = compress(h);

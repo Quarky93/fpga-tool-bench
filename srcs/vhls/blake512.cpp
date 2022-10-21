@@ -109,6 +109,7 @@ static state_t blake_round(state_t state, int round) {
 }
 
 static ap_uint<512> blake(ap_uint<1024> padded_msg) {
+#pragma HLS INLINE off
     state_t init;
     init.v[0] = 0x6A09E667F3BCC908;
     init.v[1] = 0xBB67AE8584CAA73B;
