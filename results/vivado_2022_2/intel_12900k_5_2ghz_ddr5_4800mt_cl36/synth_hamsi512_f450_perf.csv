@@ -1,0 +1,23 @@
+# started on Sat Oct 22 04:35:04 2022
+
+388260.25,msec,task-clock,388260253337,100.00,1.646,CPUs utilized
+2017567541771,,cpu_core/cycles/,386976301275,99.69,5.196,G/sec
+1026949930173,,cpu_atom/cycles/,1301913314,0.49,2.645,G/sec
+4037630551704,,cpu_core/instructions/,386976301275,99.69,10.399,G/sec
+1011480804789,,cpu_atom/instructions/,1301913314,0.49,2.605,G/sec
+22610,,context-switches,388260253337,100.00,58.234,/sec
+280,,cpu-migrations,388260253337,100.00,0.721,/sec
+17306043,,page-faults,388260253337,100.00,44.573,K/sec
+<not supported>,,cpu_core/stalled-cycles-frontend/,0,100.00,,
+<not supported>,,cpu_atom/stalled-cycles-frontend/,0,100.00,,
+<not supported>,,cpu_core/stalled-cycles-backend/,0,100.00,,
+<not supported>,,cpu_atom/stalled-cycles-backend/,0,100.00,,
+856592329395,,cpu_core/branches/,386976301275,99.69,2.206,G/sec
+228931484784,,cpu_atom/branches/,1301913314,0.49,589.634,M/sec
+4690618810,,cpu_core/branch-misses/,386976301275,99.69,12.081,M/sec
+2054502811,,cpu_atom/branch-misses/,1301913314,0.49,5.292,M/sec
+24734710907,,cpu_core/cache-references/,386976301275,99.69,63.707,M/sec
+19133677925,,cpu_atom/cache-references/,1301913314,0.49,49.281,M/sec
+9001761505,,cpu_core/cache-misses/,386976301275,99.69,23.185,M/sec
+8558737626,,cpu_atom/cache-misses/,1301913314,0.49,22.044,M/sec
+235834311164,ns,duration_time,235834311164,100.00,607.413,M/sec
