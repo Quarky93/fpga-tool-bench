@@ -1,14 +1,24 @@
 # FpgaToolBench
 Drag racing computers with FPGA design tools.
 
-## Vivado 2022.1
+## Vitis_HLS csynth + Vivado synthesis + Vivado implementation
 Lower runtime is better!
-| CPU                      | RAM                | OS           | Runtime (seconds) |
-|--------------------------|--------------------|--------------|-------------------|
-| Intel i9-13900K (5.8GHz) | DDR5 4800MT/s CL36 | Ubuntu 20.04 | 8,954             |
-| Intel i9-12900K (5.2GHz) | DDR5 4800MT/s CL36 | Ubuntu 20.04 | 9,833             |
-| AMD R9-5950X (4.9GHz)    | DDR4 3600MT/s CL18 | Ubuntu 20.04 | 13,779            |
-| AMD EYPC 7313P (3.7GHz)  | DDR4 3200MT/s CL22 | Ubuntu 20.04 | 16,501            |
+| CPU                      | RAM                | OS           | Version | Runtime (seconds) |
+|--------------------------|--------------------|--------------|---------|-------------------|
+| AMD R7-7700X (5.5GHz)    | DDR5 5600MT/S CL40 | Ubuntu 22.04 | 2023.1  | 8,279             |
+| Intel i9-13900K (5.8GHz) | DDR5 4800MT/s CL36 | Ubuntu 20.04 | 2022.1  | 8,954             |
+| Intel i9-12900K (5.2GHz) | DDR5 4800MT/s CL36 | Ubuntu 20.04 | 2022.1  | 9,833             |
+| AMD R9-5950X (4.9GHz)    | DDR4 3600MT/s CL18 | Ubuntu 20.04 | 2022.1  | 13,779            |
+| AMD EYPC 7313P (3.7GHz)  | DDR4 3200MT/s CL22 | Ubuntu 20.04 | 2022.1  | 16,501            |
+
+
+## Vivado synthesis + Vivado implementation
+| CPU                      | RAM                | OS           | Version | Runtime (seconds) |
+|--------------------------|--------------------|--------------|---------|-------------------|
+| Intel i9-13900K (5.8GHz) | DDR5 4800MT/s CL36 | Ubuntu 20.04 | 2022.1  | 6,395             |
+| AMD R7-7700X (5.5GHz)    | DDR5 5600MT/S CL40 | Ubuntu 22.04 | 2023.1  | 6,804             |
+| Intel i9-12900K (5.2GHz) | DDR5 4800MT/s CL36 | Ubuntu 20.04 | 2022.1  | 7,060             |
+
 
 # Instructions
 ## Prerequisites

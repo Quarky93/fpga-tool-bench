@@ -11,7 +11,8 @@ def extract_perf_data(file):
         next(reader)
         next(reader)
         for row in reader:
-            perf_data[row[2]] = {'counter_value': row[0], 'counter_unit': row[1], 'counter_runtime': row[3], 'measurement_percentage': row[4], 'metric': row[5], 'metric_unit': row[6]}
+            if (len(row) == 7):
+                perf_data[row[2]] = {'counter_value': row[0], 'counter_unit': row[1], 'counter_runtime': row[3], 'measurement_percentage': row[4], 'metric': row[5], 'metric_unit': row[6]}
     return perf_data
 
 def get_run_time(perf_data):
