@@ -5,7 +5,8 @@ Drag racing computers with FPGA design tools.
 Lower runtime is better!
 | CPU                      | RAM                | OS           | Version | Runtime (seconds) |
 |--------------------------|--------------------|--------------|---------|-------------------|
-| AMD R7-7700X (5.5GHz)    | DDR5 5600MT/S CL40 | Ubuntu 22.04 | 2023.1  | 8,279             |
+| Intel i9-14900K (6.0GHz) | DDR5 5200MT/s CL40 | Ubuntu 22.04 | 2023.2  | 7,088             |
+| AMD R7-7700X (5.5GHz)    | DDR5 5600MT/s CL40 | Ubuntu 22.04 | 2023.1  | 8,279             |
 | Intel i9-13900K (5.8GHz) | DDR5 4800MT/s CL36 | Ubuntu 20.04 | 2022.1  | 8,954             |
 | Intel i9-12900K (5.2GHz) | DDR5 4800MT/s CL36 | Ubuntu 20.04 | 2022.1  | 9,833             |
 | AMD R9-5950X (4.9GHz)    | DDR4 3600MT/s CL18 | Ubuntu 20.04 | 2022.1  | 13,779            |
